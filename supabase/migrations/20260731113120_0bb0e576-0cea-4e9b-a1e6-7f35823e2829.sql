@@ -1,0 +1,1 @@
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS wallet_paise integer NOT NULL DEFAULT 0;
