@@ -5,7 +5,8 @@ import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { PortalShell, money } from "@/lib/portal-shell";
 import { useSession, useRoles } from "@/lib/auth";
-import { CalendarDays, MapPin, Package, PlusCircle, Wallet, Truck, IndianRupee, CalendarClock, Lock } from "lucide-react";
+import { useCart } from "@/lib/cart";
+import { CalendarDays, MapPin, Package, PlusCircle, Wallet, Truck, IndianRupee, CalendarClock, Lock, ShoppingCart, Plus, Minus, Trash2 } from "lucide-react";
 import BG from "@/assets/grocery.jpg";
 import DeliveryImg from "@/assets/delivery.jpg";
 import FarmImg from "@/assets/farm.jpg";
@@ -91,6 +92,8 @@ function DashboardInner({ userId }: { userId?: string }) {
     qc.invalidateQueries();
   }
 
+  const cartContext = useCart();
+  const navigate = useNavigate();
 
   return (
     <PortalShell bgImage={BG} title={`Welcome${profile?.full_name ? `, ${profile.full_name}` : ""}`}>
@@ -100,6 +103,44 @@ function DashboardInner({ userId }: { userId?: string }) {
         <Stat icon={IndianRupee} label="Total spent till date" value={money(totalSpent)} image={GroceryImg} />
       </div>
 
+      {cartContext && cartContext.items.length > 0 && (
+        <div className="mt-8">
+          <Panel title="Your Cart" icon={ShoppingCart}>
+            <div className="p-4 space-y-4">
+              {cartContext.items.map((item) => (
+                <div key={item.id} className="flex items-center gap-4 border border-border p-3 rounded-xl bg-white shadow-sm">
+                  {item.image ? (
+                    <img src={item.image} alt={item.name} className="w-16 h-16 rounded-lg object-cover" />
+                  ) : (
+                    <div className="w-16 h-16 rounded-lg bg-cream-dark flex items-center justify-center text-muted-foreground"><Package className="h-6 w-6" /></div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-brand-green-dark truncate">{item.name}</p>
+                    <p className="text-sm font-semibold text-brand-red">{money(item.price_paise)}</p>
+                  </div>
+                  <div className="flex items-center gap-2 border border-border rounded-lg bg-cream">
+                    <button onClick={() => cartContext.updateQuantity(item.id, -1)} className="p-1.5 hover:text-brand-red transition"><Minus className="h-4 w-4" /></button>
+                    <span className="w-4 text-center text-sm font-bold">{item.quantity}</span>
+                    <button onClick={() => cartContext.updateQuantity(item.id, 1)} className="p-1.5 hover:text-brand-green transition"><Plus className="h-4 w-4" /></button>
+                  </div>
+                  <button onClick={() => cartContext.removeFromCart(item.id)} className="p-2 text-muted-foreground hover:text-brand-red transition">
+                    <Trash2 className="h-5 w-5" />
+                  </button>
+                </div>
+              ))}
+              <div className="flex items-center justify-between pt-4 border-t border-border">
+                <div>
+                  <p className="text-sm text-muted-foreground">Subtotal</p>
+                  <p className="text-2xl font-extrabold text-brand-brown">{money(cartContext.totalPaise)}</p>
+                </div>
+                <button onClick={() => navigate({ to: "/checkout" } as any)} className="btn-ripple px-6 py-3 rounded-full bg-brand-red text-white font-bold hover:brightness-110 shadow-md">
+                  Proceed to Checkout
+                </button>
+              </div>
+            </div>
+          </Panel>
+        </div>
+      )}
 
       <div className="mt-8 grid lg:grid-cols-2 gap-4">
         <Panel title="Today's deliveries" icon={Truck}>

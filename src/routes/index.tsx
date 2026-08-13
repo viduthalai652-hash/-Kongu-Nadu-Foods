@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
@@ -21,6 +21,7 @@ import {
   Repeat,
 } from "lucide-react";
 import { useSession } from "@/lib/auth";
+import { useCart } from "@/lib/cart";
 
 import logo from "../assets/logo.png";
 import heroVideo from "../assets/hero.mp4";
@@ -454,10 +455,36 @@ const week = [
   { day: "Sat", item: "Cholam", image: PHOTOS.cholamBatter },
 ];
 
+const riceVarieties = [
+  { name: "Bamboo Rice", price: 150, image: PHOTOS.riceBamboo },
+  { name: "Karuppu Kavuni", price: 160, image: PHOTOS.riceKavuni },
+  { name: "Kattuyanam", price: 140, image: PHOTOS.riceKattuyanam },
+  { name: "Kichadi Samba", price: 130, image: PHOTOS.riceKichadi },
+  { name: "Kullakar", price: 125, image: PHOTOS.riceKullakar },
+  { name: "Mapillai Samba", price: 155, image: PHOTOS.riceMappillai },
+  { name: "Poongar", price: 140, image: PHOTOS.ricePoongar },
+  { name: "Rajamudi", price: 160, image: PHOTOS.riceRajamudi },
+  { name: "Salem Sanna", price: 135, image: PHOTOS.riceSalemsanna },
+  { name: "Seeraga Samba", price: 180, image: PHOTOS.riceSeeragasamba },
+  { name: "Sivappu Kavuni", price: 165, image: PHOTOS.riceSivappukavuni },
+  { name: "Thooyamalli", price: 150, image: PHOTOS.riceThooyamalli },
+];
+
+const milletsVarieties = [
+  { name: "Barnyard Millet", price: 110, image: PHOTOS.milletBarnyard },
+  { name: "Browntop Millet", price: 130, image: PHOTOS.milletBrowntop },
+  { name: "Finger Millet (Ragi)", price: 90, image: PHOTOS.milletFinger },
+  { name: "Foxtail Millet", price: 100, image: PHOTOS.milletFoxtail },
+  { name: "Kodo Millet", price: 105, image: PHOTOS.milletKodo },
+  { name: "Little Millet", price: 115, image: PHOTOS.milletLittle },
+  { name: "Multi-Millet Mix", price: 140, image: PHOTOS.milletMix },
+  { name: "Pearl Millet (Bajra)", price: 85, image: PHOTOS.milletPearl },
+  { name: "Proso Millet", price: 95, image: PHOTOS.milletProso },
+  { name: "Ragi Flour", price: 80, image: PHOTOS.flourRagi },
+  { name: "Sorghum (Jowar)", price: 90, image: PHOTOS.cholamBatter },
+];
+
 function BatterSection() {
-  const [emblaRef, api] = useEmblaCarousel({ loop: true, align: "start", slidesToScroll: 2, containScroll: false }, [
-    Autoplay({ delay: 3600, stopOnInteraction: false, stopOnMouseEnter: true }),
-  ]);
   return (
     <section id="batter" className="py-20 md:py-28 bg-background">
       <div className="mx-auto max-w-7xl px-4">
@@ -479,98 +506,39 @@ function BatterSection() {
           </div>
         </div>
 
-        {/* product carousel */}
-        <div className="mt-12 flex items-end justify-between gap-4 mb-6">
+        {/* product grid */}
+        <div className="mt-12 text-center mb-8">
           <h3 className="font-display font-extrabold text-2xl md:text-3xl text-brand-green-dark">
             Our batter varieties
           </h3>
-          <div className="hidden md:flex gap-2">
-            <button
-              onClick={() => api?.scrollPrev()}
-              aria-label="Previous"
-              className="h-11 w-11 rounded-full border border-border bg-white hover:bg-cream-dark grid place-items-center transition"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-            <button
-              onClick={() => api?.scrollNext()}
-              aria-label="Next"
-              className="h-11 w-11 rounded-full bg-brand-green text-white hover:bg-brand-green-dark grid place-items-center transition"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-          </div>
         </div>
-        <div className="overflow-hidden reveal" ref={emblaRef}>
-          <div className="flex">
-            {featured.map((p) => (
-              <div key={p.name} className="min-w-0 shrink-0 grow-0 basis-[80%] sm:basis-[48%] lg:basis-[30%] pr-5">
-                <div className="group rounded-3xl bg-white shadow-sm border border-border overflow-hidden hover:shadow-lg transition h-full">
-                  <div className="aspect-square overflow-hidden bg-cream-dark">
-                    <img
-                      src={p.image}
-                      alt={p.name}
-                      loading="lazy"
-                      className="h-full w-full object-cover group-hover:scale-105 transition duration-500"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <h3 className="font-display font-bold text-lg text-brand-green-dark">{p.name}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">{p.tag}</p>
-                    <div className="mt-4 flex items-center justify-between">
-                      <span className="text-brand-red font-bold text-lg">
-                        ₹84<span className="text-sm text-muted-foreground font-medium"> / litre</span>
-                      </span>
-                      <span className="text-xs font-semibold text-brand-green bg-brand-green/10 px-2.5 py-1 rounded-full">
-                        Subscribe
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* weekly schedule */}
-        <div className="reveal mt-16 text-center max-w-2xl mx-auto">
-          <h3 className="font-display font-extrabold text-2xl md:text-3xl text-brand-green-dark">
-            Your week, day by day
-          </h3>
-          <p className="mt-3 text-muted-foreground">
-            Each day you can choose the day's speciality batter, Plain Batter, or both — in 1, 2 or 3 litre packs.
-          </p>
-        </div>
-        <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {week.map((w) => (
-            <div
-              key={w.day}
-              className="reveal group rounded-3xl bg-white border border-border shadow-sm overflow-hidden hover:shadow-lg transition"
-            >
-              <div className="aspect-square overflow-hidden">
+        <div className="reveal grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
+          {featured.map((p) => (
+            <div key={p.name} className="group rounded-2xl bg-white shadow-sm border border-border overflow-hidden hover:shadow-lg transition h-full">
+              <div className="aspect-square overflow-hidden bg-cream-dark">
                 <img
-                  src={w.image}
-                  alt={`${w.item} batter`}
+                  src={p.image}
+                  alt={p.name}
                   loading="lazy"
                   className="h-full w-full object-cover group-hover:scale-105 transition duration-500"
                 />
               </div>
-              <div className="p-4">
-                <p className="text-[10px] font-bold tracking-[0.2em] text-brand-red">{w.day.toUpperCase()}</p>
-                <p className="mt-1 font-display font-bold text-brand-green-dark">{w.item}</p>
-                <p className="text-xs text-muted-foreground mt-1">or Plain Batter · or both</p>
-                <p className="mt-2 text-sm font-bold text-brand-green">
-                  ₹168 <span className="text-xs text-muted-foreground font-medium">/ day (combo)</span>
-                </p>
+              <div className="p-3 sm:p-4">
+                <h3 className="font-display font-bold text-sm sm:text-base text-brand-green-dark leading-tight">{p.name}</h3>
+                <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5">{p.tag}</p>
+                <div className="mt-3 flex flex-wrap gap-2 items-center justify-between">
+                  <span className="text-brand-red font-bold text-sm">
+                    ₹84<span className="text-[10px] text-muted-foreground font-medium">/L</span>
+                  </span>
+                  <span className="text-[10px] font-semibold text-brand-green bg-brand-green/10 px-2 py-0.5 rounded-full">
+                    Subscribe
+                  </span>
+                </div>
               </div>
             </div>
           ))}
         </div>
-        <div className="reveal mt-8 flex flex-wrap items-center justify-center gap-3 rounded-2xl bg-brand-green/8 border border-brand-green/20 p-5 max-w-3xl mx-auto">
-          <span className="text-sm font-semibold text-brand-green-dark">Weekly total (Mon–Sat)</span>
-          <span className="text-2xl font-extrabold text-brand-red">₹1,008</span>
-          <span className="text-xs text-muted-foreground">Including GST • Free delivery • Sunday holiday</span>
-        </div>
+
       </div>
     </section>
   );
@@ -619,6 +587,18 @@ const categories = [
 function WhatWeOffer() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const cartContext = useCart();
+  const navigate = useNavigate();
+  const { session } = useSession();
+
+  const handleAction = (callback: () => void) => {
+    if (!session) {
+      navigate({ to: "/auth" } as any);
+    } else {
+      callback();
+    }
+  };
+
   useEffect(() => {
     if (paused) return;
     const id = setInterval(() => setActive((i) => (i + 1) % categories.length), 4200);
@@ -668,8 +648,8 @@ function WhatWeOffer() {
               );
             })}
           </div>
-          <div className="grid md:grid-cols-2 items-stretch">
-            <div className="aspect-[4/3] overflow-hidden bg-cream-dark">
+          <div className="grid lg:grid-cols-4 items-stretch">
+            <div className="lg:col-span-1 aspect-[4/3] lg:aspect-auto overflow-hidden bg-cream-dark">
               <img
                 key={cat.image}
                 src={cat.image}
@@ -678,19 +658,123 @@ function WhatWeOffer() {
                 className={`h-full w-full animate-in fade-in duration-500 ${cat.key === "batter" ? "object-contain p-8" : "object-cover"}`}
               />
             </div>
-            <div className="p-8 md:p-12 flex flex-col justify-center">
+            <div className="lg:col-span-3 p-8 lg:p-12 flex flex-col justify-center">
               <h3 className="font-display font-extrabold text-2xl md:text-3xl text-brand-green-dark">{cat.heading}</h3>
-              <p className="mt-4 text-foreground/70 leading-relaxed">{cat.body}</p>
-              <ul className="mt-6 space-y-3">
-                {cat.bullets.map((b) => (
-                  <li key={b} className="flex items-center gap-3">
-                    <span className="h-6 w-6 rounded-full bg-brand-green/15 text-brand-green grid place-items-center shrink-0">
-                      <Check className="h-3.5 w-3.5" />
-                    </span>
-                    <span className="text-sm font-medium">{b}</span>
-                  </li>
-                ))}
-              </ul>
+              {cat.key === "batter" ? (
+                <div className="mt-6 grid grid-cols-2 lg:grid-cols-3 gap-4">
+                  {week.map((w) => (
+                    <div key={w.day} className="rounded-xl border border-border bg-background shadow-sm overflow-hidden flex flex-col hover:shadow-md transition">
+                      <div className="flex gap-3 p-3 pb-2">
+                        <img src={w.image} className="w-14 h-14 rounded-lg object-cover shrink-0 shadow-sm" alt={w.item} />
+                        <div className="flex flex-col justify-center">
+                          <p className="text-[10px] font-extrabold tracking-wider text-brand-red">{w.day.toUpperCase()}</p>
+                          <p className="text-sm font-bold text-brand-green-dark leading-tight mt-0.5">{w.item}</p>
+                          <p className="text-xs text-muted-foreground mt-0.5">₹168</p>
+                        </div>
+                      </div>
+                      <div className="mt-auto p-3 pt-0 flex gap-2">
+                        <button 
+                          onClick={() => handleAction(() => {
+                            cartContext?.addToCart({ id: `combo-${w.day}`, name: `${w.item} + Plain Combo`, price_paise: 16800, quantity: 1, image: w.image });
+                          })}
+                          className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-cream-dark text-brand-brown hover:bg-brand-green hover:text-white transition"
+                        >
+                          Add to Cart
+                        </button>
+                        <button 
+                          onClick={() => handleAction(() => {
+                            cartContext?.addToCart({ id: `combo-${w.day}`, name: `${w.item} + Plain Combo`, price_paise: 16800, quantity: 1, image: w.image });
+                            navigate({ to: "/checkout" } as any);
+                          })}
+                          className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
+                        >
+                          Buy
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : cat.key === "rice" ? (
+                <div className="mt-6 grid grid-cols-2 xl:grid-cols-3 gap-4 max-h-[500px] overflow-y-auto p-2 pb-6 custom-scrollbar">
+                  {riceVarieties.map((r, idx) => (
+                    <div key={idx} className="rounded-xl border border-border bg-background shadow-sm overflow-hidden flex flex-col hover:shadow-md transition">
+                      <div className="flex gap-3 p-3 pb-2">
+                        <img src={r.image} className="w-14 h-14 rounded-lg object-cover shrink-0 shadow-sm" alt={r.name} />
+                        <div className="flex flex-col justify-center">
+                          <p className="text-sm font-bold text-brand-green-dark leading-tight">{r.name}</p>
+                          <p className="text-xs text-muted-foreground mt-0.5">₹{r.price} / 500g</p>
+                        </div>
+                      </div>
+                      <div className="mt-auto p-3 pt-0 flex gap-2">
+                        <button 
+                          onClick={() => handleAction(() => {
+                            cartContext?.addToCart({ id: `rice-${idx}`, name: r.name, price_paise: r.price * 100, quantity: 1, image: r.image });
+                          })}
+                          className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-cream-dark text-brand-brown hover:bg-brand-green hover:text-white transition"
+                        >
+                          Add to Cart
+                        </button>
+                        <button 
+                          onClick={() => handleAction(() => {
+                            cartContext?.addToCart({ id: `rice-${idx}`, name: r.name, price_paise: r.price * 100, quantity: 1, image: r.image });
+                            navigate({ to: "/checkout" } as any);
+                          })}
+                          className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
+                        >
+                          Buy
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : cat.key === "millets" ? (
+                <div className="mt-6 grid grid-cols-2 xl:grid-cols-3 gap-4 max-h-[500px] overflow-y-auto p-2 pb-6 custom-scrollbar">
+                  {milletsVarieties.map((m, idx) => (
+                    <div key={idx} className="rounded-xl border border-border bg-background shadow-sm overflow-hidden flex flex-col hover:shadow-md transition">
+                      <div className="flex gap-3 p-3 pb-2">
+                        <img src={m.image} className="w-14 h-14 rounded-lg object-cover shrink-0 shadow-sm" alt={m.name} />
+                        <div className="flex flex-col justify-center">
+                          <p className="text-sm font-bold text-brand-green-dark leading-tight">{m.name}</p>
+                          <p className="text-xs text-muted-foreground mt-0.5">₹{m.price} / 500g</p>
+                        </div>
+                      </div>
+                      <div className="mt-auto p-3 pt-0 flex gap-2">
+                        <button 
+                          onClick={() => handleAction(() => {
+                            cartContext?.addToCart({ id: `millet-${idx}`, name: m.name, price_paise: m.price * 100, quantity: 1, image: m.image });
+                          })}
+                          className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-cream-dark text-brand-brown hover:bg-brand-green hover:text-white transition"
+                        >
+                          Add to Cart
+                        </button>
+                        <button 
+                          onClick={() => handleAction(() => {
+                            cartContext?.addToCart({ id: `millet-${idx}`, name: m.name, price_paise: m.price * 100, quantity: 1, image: m.image });
+                            navigate({ to: "/checkout" } as any);
+                          })}
+                          className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
+                        >
+                          Buy
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <>
+                  <p className="mt-4 text-foreground/70 leading-relaxed">{cat.body}</p>
+                  <ul className="mt-6 space-y-3">
+                    {cat.bullets.map((b) => (
+                      <li key={b} className="flex items-center gap-3">
+                        <span className="h-6 w-6 rounded-full bg-brand-green/15 text-brand-green grid place-items-center shrink-0">
+                          <Check className="h-3.5 w-3.5" />
+                        </span>
+                        <span className="text-sm font-medium">{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
               <div className="mt-8 flex gap-2">
                 {categories.map((_, i) => (
                   <button
