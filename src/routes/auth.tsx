@@ -16,7 +16,7 @@ export const Route = createFileRoute("/auth")({
       { property: "og:description", content: "Sign in to manage your subscription." },
     ],
   }),
-  validateSearch: (s: Record<string, unknown>) => ({ redirect: (s.redirect as string) || "/dashboard" }),
+  validateSearch: (s: Record<string, unknown>) => ({ redirect: (s.redirect as string) || "/" }),
   component: AuthPage,
 });
 

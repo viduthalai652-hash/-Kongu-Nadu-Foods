@@ -604,11 +604,13 @@ function WhatWeOffer() {
   const navigate = useNavigate();
   const { session } = useSession();
 
-  const handleAction = (callback: () => void) => {
+  const handleAction = (itemData: any, isBuy: boolean = false) => {
+    cartContext?.addToCart(itemData);
     if (!session) {
-      navigate({ to: "/auth" } as any);
+      navigate({ to: "/auth", search: { redirect: isBuy ? "/checkout" : "/" } } as any);
     } else {
-      callback();
+      if (isBuy) navigate({ to: "/checkout" } as any);
+      else alert("Added to cart!"); // Or a beautiful toast if available
     }
   };
 
@@ -687,18 +689,13 @@ function WhatWeOffer() {
                       </div>
                       <div className="mt-auto p-3 pt-0 flex gap-2">
                         <button 
-                          onClick={() => handleAction(() => {
-                            cartContext?.addToCart({ id: `combo-${w.day}`, name: `${w.item} + Plain Combo`, price_paise: 16800, quantity: 1, image: w.image });
-                          })}
+                          onClick={() => handleAction({ id: `combo-${w.day}`, name: `${w.item} + Plain Combo`, price_paise: 16800, quantity: 1, image: w.image }, false)}
                           className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-cream-dark text-brand-brown hover:bg-brand-green hover:text-white transition"
                         >
                           Add to Cart
                         </button>
                         <button 
-                          onClick={() => handleAction(() => {
-                            cartContext?.addToCart({ id: `combo-${w.day}`, name: `${w.item} + Plain Combo`, price_paise: 16800, quantity: 1, image: w.image });
-                            navigate({ to: "/checkout" } as any);
-                          })}
+                          onClick={() => handleAction({ id: `combo-${w.day}`, name: `${w.item} + Plain Combo`, price_paise: 16800, quantity: 1, image: w.image }, true)}
                           className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
                         >
                           Buy
@@ -720,18 +717,13 @@ function WhatWeOffer() {
                       </div>
                       <div className="mt-auto p-3 pt-0 flex gap-2">
                         <button 
-                          onClick={() => handleAction(() => {
-                            cartContext?.addToCart({ id: `rice-${idx}`, name: r.name, price_paise: r.price * 100, quantity: 1, image: r.image });
-                          })}
+                          onClick={() => handleAction({ id: `rice-${idx}`, name: r.name, price_paise: r.price * 100, quantity: 1, image: r.image }, false)}
                           className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-cream-dark text-brand-brown hover:bg-brand-green hover:text-white transition"
                         >
                           Add to Cart
                         </button>
                         <button 
-                          onClick={() => handleAction(() => {
-                            cartContext?.addToCart({ id: `rice-${idx}`, name: r.name, price_paise: r.price * 100, quantity: 1, image: r.image });
-                            navigate({ to: "/checkout" } as any);
-                          })}
+                          onClick={() => handleAction({ id: `rice-${idx}`, name: r.name, price_paise: r.price * 100, quantity: 1, image: r.image }, true)}
                           className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
                         >
                           Buy
@@ -753,18 +745,13 @@ function WhatWeOffer() {
                       </div>
                       <div className="mt-auto p-3 pt-0 flex gap-2">
                         <button 
-                          onClick={() => handleAction(() => {
-                            cartContext?.addToCart({ id: `millet-${idx}`, name: m.name, price_paise: m.price * 100, quantity: 1, image: m.image });
-                          })}
+                          onClick={() => handleAction({ id: `millet-${idx}`, name: m.name, price_paise: m.price * 100, quantity: 1, image: m.image }, false)}
                           className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-cream-dark text-brand-brown hover:bg-brand-green hover:text-white transition"
                         >
                           Add to Cart
                         </button>
                         <button 
-                          onClick={() => handleAction(() => {
-                            cartContext?.addToCart({ id: `millet-${idx}`, name: m.name, price_paise: m.price * 100, quantity: 1, image: m.image });
-                            navigate({ to: "/checkout" } as any);
-                          })}
+                          onClick={() => handleAction({ id: `millet-${idx}`, name: m.name, price_paise: m.price * 100, quantity: 1, image: m.image }, true)}
                           className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
                         >
                           Buy
