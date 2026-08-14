@@ -120,6 +120,7 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 import { CartProvider } from "@/lib/cart";
+import { Footer } from "@/components/Footer";
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
@@ -127,8 +128,11 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <CartProvider>
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
+        <div className="flex min-h-screen flex-col">
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+          <Footer />
+        </div>
         <Toaster richColors position="top-center" />
       </CartProvider>
     </QueryClientProvider>

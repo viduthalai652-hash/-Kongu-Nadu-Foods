@@ -9,7 +9,7 @@ import karittuyanamBatter from "../assets/karittuyanam-batter.png";
 import cholamBatter from "../assets/Cholam_batter.jpg";
 import rice from "../assets/rice.jpg";
 import millets from "../assets/millets-bowls.png";
-import grocery from "../assets/grocery.jpg";
+import grocery from "../assets/grocery.png";
 import farm from "../assets/farm.jpg";
 import manufacturing from "../assets/manufacturing.jpg";
 import delivery from "../assets/delivery.jpg";

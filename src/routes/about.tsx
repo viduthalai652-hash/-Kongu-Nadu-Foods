@@ -33,7 +33,6 @@ function AboutPage() {
       <Manufacturing />
       <PricingSheet />
       <Coverage />
-      <AboutFooter />
     </div>
   );
 }
@@ -322,16 +321,3 @@ function Coverage() {
   );
 }
 
-function AboutFooter() {
-  return (
-    <footer className="border-t border-border bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-10 flex flex-wrap items-center justify-between gap-4 text-xs text-muted-foreground">
-        <div className="flex items-center gap-3">
-          <img src={logo} alt="Kongu Nadu Fresh Foods" className="h-10 w-auto" />
-          <span>© {new Date().getFullYear()} Kongu Nadu Fresh Foods.</span>
-        </div>
-        <Link to="/" hash="plans" className="text-brand-green font-semibold hover:text-brand-green-dark">Subscribe now →</Link>
-      </div>
-    </footer>
-  );
-}

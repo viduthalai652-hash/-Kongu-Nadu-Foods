@@ -12,6 +12,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Check,
+  CheckCircle2,
   Sprout,
   Wheat,
   Package,
@@ -65,7 +66,6 @@ function Home() {
       <Plans />
       <WhatWeOffer />
       <RiceSection />
-      <Footer />
     </div>
   );
 }
@@ -512,25 +512,38 @@ function BatterSection() {
             Our batter varieties
           </h3>
         </div>
-        <div className="reveal grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
-          {featured.map((p) => (
-            <div key={p.name} className="group rounded-2xl bg-white shadow-sm border border-border overflow-hidden hover:shadow-lg transition h-full">
+        <div className="reveal grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+          {week.map((p) => (
+            <div key={p.day} className="group rounded-2xl bg-white shadow-sm border border-border overflow-hidden hover:shadow-lg transition h-full flex flex-col">
               <div className="aspect-square overflow-hidden bg-cream-dark">
                 <img
                   src={p.image}
-                  alt={p.name}
+                  alt={p.item}
                   loading="lazy"
                   className="h-full w-full object-cover group-hover:scale-105 transition duration-500"
                 />
               </div>
-              <div className="p-3 sm:p-4">
-                <h3 className="font-display font-bold text-sm sm:text-base text-brand-green-dark leading-tight">{p.name}</h3>
-                <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5">{p.tag}</p>
-                <div className="mt-3 flex flex-wrap gap-2 items-center justify-between">
-                  <span className="text-brand-red font-bold text-sm">
-                    ₹84<span className="text-[10px] text-muted-foreground font-medium">/L</span>
+              <div className="p-3 sm:p-4 flex flex-col flex-grow">
+                <p className="text-xs sm:text-sm font-bold text-brand-green uppercase tracking-wide">
+                  {p.day === "Mon" ? "Monday" :
+                   p.day === "Tue" ? "Tuesday" :
+                   p.day === "Wed" ? "Wednesday" :
+                   p.day === "Thu" ? "Thursday" :
+                   p.day === "Fri" ? "Friday" : "Saturday"}
+                </p>
+                <ul className="mt-2 space-y-1">
+                  <li className="flex items-start gap-1.5 text-sm sm:text-base text-brand-green-dark font-medium leading-tight">
+                    <span className="text-brand-green/60">•</span> {p.item}
+                  </li>
+                  <li className="flex items-start gap-1.5 text-sm sm:text-base text-brand-green-dark font-medium leading-tight">
+                    <span className="text-brand-green/60">•</span> Plain Batter
+                  </li>
+                </ul>
+                <div className="mt-auto pt-3 flex flex-wrap gap-2 items-center justify-between">
+                  <span className="text-brand-green-dark font-bold text-sm">
+                    2 LTR / ₹168
                   </span>
-                  <span className="text-[10px] font-semibold text-brand-green bg-brand-green/10 px-2 py-0.5 rounded-full">
+                  <span className="text-[10px] font-semibold text-brand-green bg-brand-green/10 px-2 py-0.5 rounded-full cursor-pointer hover:bg-brand-green hover:text-white transition-colors">
                     Subscribe
                   </span>
                 </div>
@@ -856,88 +869,3 @@ function RiceSection() {
   );
 }
 
-/* ---------------- FOOTER ---------------- */
-function Footer() {
-  return (
-    <footer className="border-t border-border bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-12 grid md:grid-cols-4 gap-8">
-        <div className="md:col-span-2">
-          <img src={logo} alt="Kongu Nadu Fresh Foods" className="h-14 w-auto" />
-          <p className="mt-4 text-sm text-muted-foreground max-w-sm">
-            Pure tradition, pure nutrition — batter delivered Monday to Saturday, 4 PM – 7 PM across Coimbatore.
-          </p>
-          <div className="mt-4 flex gap-3">
-            <img
-              src={packIdly}
-              alt="Kongunadu idly batter pack"
-              loading="lazy"
-              className="h-20 w-auto object-contain"
-            />
-            <img
-              src={packDosa}
-              alt="Kongunadu idly dosa batter pack"
-              loading="lazy"
-              className="h-20 w-auto object-contain"
-            />
-          </div>
-        </div>
-        <div>
-          <p className="font-semibold text-brand-green-dark mb-3">Shop</p>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li>
-              <a href="#batter" className="hover:text-brand-green">
-                Fresh batter
-              </a>
-            </li>
-            <li>
-              <a href="#rice" className="hover:text-brand-green">
-                Traditional rice
-              </a>
-            </li>
-            <li>
-              <a href="#offer" className="hover:text-brand-green">
-                Millets
-              </a>
-            </li>
-            <li>
-              <a href="#offer" className="hover:text-brand-green">
-                Grocery & oils
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <p className="font-semibold text-brand-green-dark mb-3">Company</p>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li>
-              <Link to="/about" className="hover:text-brand-green">
-                About us
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" hash="offer" className="hover:text-brand-green">
-                Campo offer
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" hash="made" className="hover:text-brand-green">
-                How it's made
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" hash="coverage" className="hover:text-brand-green">
-                Delivery coverage
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div className="border-t border-border">
-        <div className="mx-auto max-w-7xl px-4 py-5 flex flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} Kongu Nadu Fresh Foods. All rights reserved.</p>
-          <p>Made with 🌱 in Kongu Nadu, Tamil Nadu.</p>
-        </div>
-      </div>
-    </footer>
-  );
-}
