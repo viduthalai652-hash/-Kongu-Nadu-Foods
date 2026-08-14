@@ -20,6 +20,7 @@ import {
   MapPin,
   CalendarDays,
   Repeat,
+  User,
 } from "lucide-react";
 import { useSession } from "@/lib/auth";
 import { useCart } from "@/lib/cart";
@@ -75,6 +76,7 @@ function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { session } = useSession();
+  const userName = session?.user?.user_metadata?.full_name?.split(" ")[0] || "Profile";
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
@@ -110,12 +112,22 @@ function Nav() {
           </Link>
         </nav>
         <div className="hidden lg:flex items-center gap-2">
+          <Link
+            to={session ? "/subscribe" : "/auth"}
+            search={session ? undefined : ({ redirect: "/subscribe" } as any)}
+            className="btn-ripple px-5 py-2.5 rounded-full text-sm font-semibold bg-brand-red text-white shadow-sm hover:shadow-md hover:brightness-110 transition mr-2"
+          >
+            Subscribe Now
+          </Link>
           {session ? (
             <Link
               to="/dashboard"
-              className="px-4 py-2 rounded-full text-sm font-semibold text-brand-brown hover:bg-cream-dark transition"
+              className="group px-2 py-1 flex flex-col items-center justify-center gap-1 rounded-xl text-xs font-bold text-brand-green-dark hover:bg-brand-green/5 transition"
             >
-              My account
+              <div className="h-10 w-10 rounded-full border-2 border-brand-green/30 bg-brand-green/10 flex items-center justify-center group-hover:border-brand-green/60 transition">
+                <User className="h-6 w-6 text-brand-green" />
+              </div>
+              <span className="leading-none">{userName}</span>
             </Link>
           ) : (
             <Link
@@ -125,13 +137,6 @@ function Nav() {
               Sign in
             </Link>
           )}
-          <Link
-            to={session ? "/subscribe" : "/auth"}
-            search={session ? undefined : ({ redirect: "/subscribe" } as any)}
-            className="btn-ripple px-5 py-2.5 rounded-full text-sm font-semibold bg-brand-red text-white shadow-sm hover:shadow-md hover:brightness-110 transition"
-          >
-            Subscribe Now
-          </Link>
         </div>
         <button className="lg:hidden p-2 -mr-2" onClick={() => setOpen((v) => !v)} aria-label="Toggle menu">
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
