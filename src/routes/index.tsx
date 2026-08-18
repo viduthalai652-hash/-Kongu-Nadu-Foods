@@ -787,7 +787,7 @@ function WhatWeOffer() {
                           </button>
                         );
                       })()}
-                      <div className="flex gap-4 p-4 sm:p-5 h-full">
+                      <div className="flex gap-4 p-4 sm:p-5 flex-1">
                         <img src={r.image} className="w-20 h-20 rounded-xl object-cover shrink-0 shadow-sm" alt={r.name} />
                         <div className="flex flex-col w-full h-full justify-between">
                           <div className="pr-[82px]">
@@ -852,7 +852,7 @@ function WhatWeOffer() {
                           </button>
                         );
                       })()}
-                      <div className="flex gap-4 p-4 sm:p-5 h-full">
+                      <div className="flex gap-4 p-4 sm:p-5 flex-1">
                         <img src={m.image} className="w-20 h-20 rounded-xl object-cover shrink-0 shadow-sm" alt={m.name} />
                         <div className="flex flex-col w-full h-full justify-between">
                           <div className="pr-[82px]">
