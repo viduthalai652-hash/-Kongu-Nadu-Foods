@@ -799,20 +799,20 @@ function WhatWeOffer() {
                               <span className="text-[10px] font-extrabold text-brand-green whitespace-nowrap">10% OFF</span>
                               <div className="h-px flex-1 border-b border-dashed border-gray-300"></div>
                             </div>
-                            <div className="flex items-center gap-1.5 mt-0.5">
-                              <p className="text-base font-extrabold text-gray-800">₹{Math.round(r.price * 0.9)}</p>
-                              <p className="text-xs font-medium text-gray-400 line-through">₹{r.price}</p>
+                            <div className="flex items-center justify-between mt-1">
+                              <div className="flex items-center gap-1.5">
+                                <p className="text-base font-extrabold text-gray-800">₹{Math.round(r.price * 0.9)}</p>
+                                <p className="text-xs font-medium text-gray-400 line-through">₹{r.price}</p>
+                              </div>
+                              <button 
+                                onClick={() => handleAction({ id: `rice-${idx}`, name: r.name, price_paise: Math.round(r.price * 0.9) * 100, quantity: 1, image: r.image }, true)}
+                                className="px-5 py-1.5 text-[11px] font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
+                              >
+                                Buy
+                              </button>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="p-4 pt-0 mt-auto flex justify-end">
-                        <button 
-                          onClick={() => handleAction({ id: `rice-${idx}`, name: r.name, price_paise: Math.round(r.price * 0.9) * 100, quantity: 1, image: r.image }, true)}
-                          className="px-6 py-1.5 text-xs font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
-                        >
-                          Buy
-                        </button>
                       </div>
                     </div>
                   ))}
@@ -864,20 +864,20 @@ function WhatWeOffer() {
                               <span className="text-[10px] font-extrabold text-brand-green whitespace-nowrap">10% OFF</span>
                               <div className="h-px flex-1 border-b border-dashed border-gray-300"></div>
                             </div>
-                            <div className="flex items-center gap-1.5 mt-0.5">
-                              <p className="text-base font-extrabold text-gray-800">₹{Math.round(m.price * 0.9)}</p>
-                              <p className="text-xs font-medium text-gray-400 line-through">₹{m.price}</p>
+                            <div className="flex items-center justify-between mt-1">
+                              <div className="flex items-center gap-1.5">
+                                <p className="text-base font-extrabold text-gray-800">₹{Math.round(m.price * 0.9)}</p>
+                                <p className="text-xs font-medium text-gray-400 line-through">₹{m.price}</p>
+                              </div>
+                              <button 
+                                onClick={() => handleAction({ id: `millet-${idx}`, name: m.name, price_paise: Math.round(m.price * 0.9) * 100, quantity: 1, image: m.image }, true)}
+                                className="px-5 py-1.5 text-[11px] font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
+                              >
+                                Buy
+                              </button>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="p-4 pt-0 mt-auto flex justify-end">
-                        <button 
-                          onClick={() => handleAction({ id: `millet-${idx}`, name: m.name, price_paise: Math.round(m.price * 0.9) * 100, quantity: 1, image: m.image }, true)}
-                          className="px-6 py-1.5 text-xs font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
-                        >
-                          Buy
-                        </button>
                       </div>
                     </div>
                   ))}
