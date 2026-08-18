@@ -770,7 +770,7 @@ function WhatWeOffer() {
                           </div>
                         ) : (
                           <button 
-                            onClick={() => handleAction({ id: `rice-${idx}`, name: r.name, price_paise: r.price * 100, quantity: 1, image: r.image }, false)}
+                            onClick={() => handleAction({ id: `rice-${idx}`, name: r.name, price_paise: Math.round(r.price * 0.9) * 100, quantity: 1, image: r.image }, false)}
                             className="absolute top-4 right-4 h-8 w-8 rounded-lg bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition z-10"
                             title="Add to Cart"
                           >
@@ -780,9 +780,17 @@ function WhatWeOffer() {
                       })()}
                       <div className="flex gap-4 p-5 pb-4">
                         <img src={r.image} className="w-20 h-20 rounded-xl object-cover shrink-0 shadow-sm" alt={r.name} />
-                        <div className="flex flex-col justify-center pr-10">
+                        <div className="flex flex-col justify-center pr-10 w-full">
                           <p className="text-base font-bold text-brand-green-dark leading-tight">{r.name}</p>
-                          <p className="text-sm text-muted-foreground mt-1">₹{r.price} / 500g</p>
+                          <p className="text-sm text-muted-foreground mt-0.5">500g</p>
+                          <div className="mt-2 flex items-center gap-2 w-full">
+                            <span className="text-[10px] font-extrabold text-brand-green whitespace-nowrap">10% OFF</span>
+                            <div className="h-px flex-1 border-b border-dashed border-gray-300"></div>
+                          </div>
+                          <div className="flex items-center gap-1.5 mt-1">
+                            <p className="text-base font-extrabold text-gray-800">₹{Math.round(r.price * 0.9)}</p>
+                            <p className="text-xs font-medium text-gray-400 line-through">₹{r.price}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -815,7 +823,7 @@ function WhatWeOffer() {
                           </div>
                         ) : (
                           <button 
-                            onClick={() => handleAction({ id: `millet-${idx}`, name: m.name, price_paise: m.price * 100, quantity: 1, image: m.image }, false)}
+                            onClick={() => handleAction({ id: `millet-${idx}`, name: m.name, price_paise: Math.round(m.price * 0.9) * 100, quantity: 1, image: m.image }, false)}
                             className="absolute top-4 right-4 h-8 w-8 rounded-lg bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition z-10"
                             title="Add to Cart"
                           >
@@ -825,9 +833,17 @@ function WhatWeOffer() {
                       })()}
                       <div className="flex gap-4 p-5 pb-4">
                         <img src={m.image} className="w-20 h-20 rounded-xl object-cover shrink-0 shadow-sm" alt={m.name} />
-                        <div className="flex flex-col justify-center pr-10">
+                        <div className="flex flex-col justify-center pr-10 w-full">
                           <p className="text-base font-bold text-brand-green-dark leading-tight">{m.name}</p>
-                          <p className="text-sm text-muted-foreground mt-1">₹{m.price} / 500g</p>
+                          <p className="text-sm text-muted-foreground mt-0.5">500g</p>
+                          <div className="mt-2 flex items-center gap-2 w-full">
+                            <span className="text-[10px] font-extrabold text-brand-green whitespace-nowrap">10% OFF</span>
+                            <div className="h-px flex-1 border-b border-dashed border-gray-300"></div>
+                          </div>
+                          <div className="flex items-center gap-1.5 mt-1">
+                            <p className="text-base font-extrabold text-gray-800">₹{Math.round(m.price * 0.9)}</p>
+                            <p className="text-xs font-medium text-gray-400 line-through">₹{m.price}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
