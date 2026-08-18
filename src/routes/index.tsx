@@ -787,14 +787,14 @@ function WhatWeOffer() {
                           </button>
                         );
                       })()}
-                      <div className="flex gap-4 p-4 sm:p-5 flex-1">
+                      <div className="flex gap-4 p-4 sm:p-5 pb-4">
                         <img src={r.image} className="w-20 h-20 rounded-xl object-cover shrink-0 shadow-sm" alt={r.name} />
-                        <div className="flex flex-col w-full h-full justify-between">
+                        <div className="flex flex-col w-full justify-center">
                           <div className="pr-[82px]">
                             <p className="text-[15px] font-bold text-brand-green-dark leading-tight line-clamp-2" title={r.name}>{r.name}</p>
                             <p className="text-[13px] text-muted-foreground mt-0.5">500g</p>
                           </div>
-                          <div className="mt-auto pt-2">
+                          <div className="mt-2">
                             <div className="flex items-center gap-2 w-full">
                               <span className="text-[10px] font-extrabold text-brand-green whitespace-nowrap">10% OFF</span>
                               <div className="h-px flex-1 border-b border-dashed border-gray-300"></div>
@@ -806,7 +806,7 @@ function WhatWeOffer() {
                           </div>
                         </div>
                       </div>
-                      <div className="p-4 pb-4 pt-0 mt-auto flex justify-end">
+                      <div className="p-4 pt-0 mt-auto flex justify-end">
                         <button 
                           onClick={() => handleAction({ id: `rice-${idx}`, name: r.name, price_paise: Math.round(r.price * 0.9) * 100, quantity: 1, image: r.image }, true)}
                           className="px-6 py-1.5 text-xs font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
@@ -852,14 +852,14 @@ function WhatWeOffer() {
                           </button>
                         );
                       })()}
-                      <div className="flex gap-4 p-4 sm:p-5 flex-1">
+                      <div className="flex gap-4 p-4 sm:p-5 pb-4">
                         <img src={m.image} className="w-20 h-20 rounded-xl object-cover shrink-0 shadow-sm" alt={m.name} />
-                        <div className="flex flex-col w-full h-full justify-between">
+                        <div className="flex flex-col w-full justify-center">
                           <div className="pr-[82px]">
                             <p className="text-[15px] font-bold text-brand-green-dark leading-tight line-clamp-2" title={m.name}>{m.name}</p>
                             <p className="text-[13px] text-muted-foreground mt-0.5">500g</p>
                           </div>
-                          <div className="mt-auto pt-2">
+                          <div className="mt-2">
                             <div className="flex items-center gap-2 w-full">
                               <span className="text-[10px] font-extrabold text-brand-green whitespace-nowrap">10% OFF</span>
                               <div className="h-px flex-1 border-b border-dashed border-gray-300"></div>
@@ -871,7 +871,7 @@ function WhatWeOffer() {
                           </div>
                         </div>
                       </div>
-                      <div className="p-4 pb-4 pt-0 mt-auto flex justify-end">
+                      <div className="p-4 pt-0 mt-auto flex justify-end">
                         <button 
                           onClick={() => handleAction({ id: `millet-${idx}`, name: m.name, price_paise: Math.round(m.price * 0.9) * 100, quantity: 1, image: m.image }, true)}
                           className="px-6 py-1.5 text-xs font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
