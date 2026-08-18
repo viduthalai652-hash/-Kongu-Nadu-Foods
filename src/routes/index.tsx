@@ -21,6 +21,7 @@ import {
   CalendarDays,
   Repeat,
   User,
+  Plus,
 } from "lucide-react";
 import { useSession } from "@/lib/auth";
 import { useCart } from "@/lib/cart";
@@ -635,7 +636,7 @@ function WhatWeOffer() {
         backgroundPosition: "center",
       }}
     >
-      <div className="mx-auto max-w-7xl px-4">
+      <div className="mx-auto max-w-[90rem] px-4">
         <div className="reveal text-center max-w-2xl mx-auto">
           <p className="text-xs font-bold tracking-[0.2em] text-brand-green">WHAT WE OFFER</p>
           <h2 className="mt-2 font-display font-extrabold text-3xl md:text-5xl text-brand-green-dark">
@@ -681,27 +682,28 @@ function WhatWeOffer() {
             <div className="lg:col-span-3 p-8 lg:p-12 flex flex-col justify-center">
               <h3 className="font-display font-extrabold text-2xl md:text-3xl text-brand-green-dark">{cat.heading}</h3>
               {cat.key === "batter" ? (
-                <div className="mt-6 grid grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                   {week.map((w) => (
-                    <div key={w.day} className="rounded-xl border border-border bg-background shadow-sm overflow-hidden flex flex-col hover:shadow-md transition">
-                      <div className="flex gap-3 p-3 pb-2">
-                        <img src={w.image} className="w-14 h-14 rounded-lg object-cover shrink-0 shadow-sm" alt={w.item} />
-                        <div className="flex flex-col justify-center">
-                          <p className="text-[10px] font-extrabold tracking-wider text-brand-red">{w.day.toUpperCase()}</p>
-                          <p className="text-sm font-bold text-brand-green-dark leading-tight mt-0.5">{w.item}</p>
-                          <p className="text-xs text-muted-foreground mt-0.5">₹168</p>
+                    <div key={w.day} className="relative rounded-2xl border border-border bg-background shadow-sm overflow-hidden flex flex-col hover:shadow-md transition">
+                      <button 
+                        onClick={() => handleAction({ id: `combo-${w.day}`, name: `${w.item} + Plain Combo`, price_paise: 16800, quantity: 1, image: w.image }, false)}
+                        className="absolute top-4 right-4 h-8 w-8 rounded bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition z-10"
+                        title="Add to Cart"
+                      >
+                        <Plus className="h-5 w-5" />
+                      </button>
+                      <div className="flex gap-4 p-5 pb-4">
+                        <img src={w.image} className="w-20 h-20 rounded-xl object-cover shrink-0 shadow-sm" alt={w.item} />
+                        <div className="flex flex-col justify-center pr-10">
+                          <p className="text-xs font-extrabold tracking-wider text-brand-red">{w.day.toUpperCase()}</p>
+                          <p className="text-base font-bold text-brand-green-dark leading-tight mt-1">{w.item}</p>
+                          <p className="text-sm text-muted-foreground mt-1">₹168</p>
                         </div>
                       </div>
-                      <div className="mt-auto p-3 pt-0 flex gap-2">
-                        <button 
-                          onClick={() => handleAction({ id: `combo-${w.day}`, name: `${w.item} + Plain Combo`, price_paise: 16800, quantity: 1, image: w.image }, false)}
-                          className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-cream-dark text-brand-brown hover:bg-brand-green hover:text-white transition"
-                        >
-                          Add to Cart
-                        </button>
+                      <div className="mt-auto p-5 pt-0">
                         <button 
                           onClick={() => handleAction({ id: `combo-${w.day}`, name: `${w.item} + Plain Combo`, price_paise: 16800, quantity: 1, image: w.image }, true)}
-                          className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
+                          className="w-full py-2.5 text-sm font-bold rounded-xl bg-brand-red text-white hover:brightness-110 transition shadow-sm"
                         >
                           Buy
                         </button>
@@ -710,26 +712,27 @@ function WhatWeOffer() {
                   ))}
                 </div>
               ) : cat.key === "rice" ? (
-                <div className="mt-6 grid grid-cols-2 xl:grid-cols-3 gap-4 max-h-[500px] overflow-y-auto p-2 pb-6 custom-scrollbar">
+                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 max-h-[600px] overflow-y-auto p-2 pb-6 custom-scrollbar">
                   {riceVarieties.map((r, idx) => (
-                    <div key={idx} className="rounded-xl border border-border bg-background shadow-sm overflow-hidden flex flex-col hover:shadow-md transition">
-                      <div className="flex gap-3 p-3 pb-2">
-                        <img src={r.image} className="w-14 h-14 rounded-lg object-cover shrink-0 shadow-sm" alt={r.name} />
-                        <div className="flex flex-col justify-center">
-                          <p className="text-sm font-bold text-brand-green-dark leading-tight">{r.name}</p>
-                          <p className="text-xs text-muted-foreground mt-0.5">₹{r.price} / 500g</p>
+                    <div key={idx} className="relative rounded-2xl border border-border bg-background shadow-sm overflow-hidden flex flex-col hover:shadow-md transition">
+                      <button 
+                        onClick={() => handleAction({ id: `rice-${idx}`, name: r.name, price_paise: r.price * 100, quantity: 1, image: r.image }, false)}
+                        className="absolute top-4 right-4 h-8 w-8 rounded bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition z-10"
+                        title="Add to Cart"
+                      >
+                        <Plus className="h-5 w-5" />
+                      </button>
+                      <div className="flex gap-4 p-5 pb-4">
+                        <img src={r.image} className="w-20 h-20 rounded-xl object-cover shrink-0 shadow-sm" alt={r.name} />
+                        <div className="flex flex-col justify-center pr-10">
+                          <p className="text-base font-bold text-brand-green-dark leading-tight">{r.name}</p>
+                          <p className="text-sm text-muted-foreground mt-1">₹{r.price} / 500g</p>
                         </div>
                       </div>
-                      <div className="mt-auto p-3 pt-0 flex gap-2">
-                        <button 
-                          onClick={() => handleAction({ id: `rice-${idx}`, name: r.name, price_paise: r.price * 100, quantity: 1, image: r.image }, false)}
-                          className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-cream-dark text-brand-brown hover:bg-brand-green hover:text-white transition"
-                        >
-                          Add to Cart
-                        </button>
+                      <div className="mt-auto p-5 pt-0">
                         <button 
                           onClick={() => handleAction({ id: `rice-${idx}`, name: r.name, price_paise: r.price * 100, quantity: 1, image: r.image }, true)}
-                          className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
+                          className="w-full py-2.5 text-sm font-bold rounded-xl bg-brand-red text-white hover:brightness-110 transition shadow-sm"
                         >
                           Buy
                         </button>
@@ -738,26 +741,27 @@ function WhatWeOffer() {
                   ))}
                 </div>
               ) : cat.key === "millets" ? (
-                <div className="mt-6 grid grid-cols-2 xl:grid-cols-3 gap-4 max-h-[500px] overflow-y-auto p-2 pb-6 custom-scrollbar">
+                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 max-h-[600px] overflow-y-auto p-2 pb-6 custom-scrollbar">
                   {milletsVarieties.map((m, idx) => (
-                    <div key={idx} className="rounded-xl border border-border bg-background shadow-sm overflow-hidden flex flex-col hover:shadow-md transition">
-                      <div className="flex gap-3 p-3 pb-2">
-                        <img src={m.image} className="w-14 h-14 rounded-lg object-cover shrink-0 shadow-sm" alt={m.name} />
-                        <div className="flex flex-col justify-center">
-                          <p className="text-sm font-bold text-brand-green-dark leading-tight">{m.name}</p>
-                          <p className="text-xs text-muted-foreground mt-0.5">₹{m.price} / 500g</p>
+                    <div key={idx} className="relative rounded-2xl border border-border bg-background shadow-sm overflow-hidden flex flex-col hover:shadow-md transition">
+                      <button 
+                        onClick={() => handleAction({ id: `millet-${idx}`, name: m.name, price_paise: m.price * 100, quantity: 1, image: m.image }, false)}
+                        className="absolute top-4 right-4 h-8 w-8 rounded bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition z-10"
+                        title="Add to Cart"
+                      >
+                        <Plus className="h-5 w-5" />
+                      </button>
+                      <div className="flex gap-4 p-5 pb-4">
+                        <img src={m.image} className="w-20 h-20 rounded-xl object-cover shrink-0 shadow-sm" alt={m.name} />
+                        <div className="flex flex-col justify-center pr-10">
+                          <p className="text-base font-bold text-brand-green-dark leading-tight">{m.name}</p>
+                          <p className="text-sm text-muted-foreground mt-1">₹{m.price} / 500g</p>
                         </div>
                       </div>
-                      <div className="mt-auto p-3 pt-0 flex gap-2">
-                        <button 
-                          onClick={() => handleAction({ id: `millet-${idx}`, name: m.name, price_paise: m.price * 100, quantity: 1, image: m.image }, false)}
-                          className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-cream-dark text-brand-brown hover:bg-brand-green hover:text-white transition"
-                        >
-                          Add to Cart
-                        </button>
+                      <div className="mt-auto p-5 pt-0">
                         <button 
                           onClick={() => handleAction({ id: `millet-${idx}`, name: m.name, price_paise: m.price * 100, quantity: 1, image: m.image }, true)}
-                          className="flex-1 py-1.5 text-xs font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
+                          className="w-full py-2.5 text-sm font-bold rounded-xl bg-brand-red text-white hover:brightness-110 transition shadow-sm"
                         >
                           Buy
                         </button>
