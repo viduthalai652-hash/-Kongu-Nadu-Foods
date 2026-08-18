@@ -215,6 +215,35 @@ function PriceTable({ title, rows, accent }: { title: string; rows: readonly (re
   );
 }
 
+const MILLETS_FALLBACK: PriceRow[] = [
+  ["Barnyard Millet", 130, 117, 59],
+  ["Browntop Millet", 140, 126, 63],
+  ["Finger Millet (Ragi)", 80, 72, 36],
+  ["Foxtail Millet", 120, 108, 54],
+  ["Kodo Millet", 130, 117, 59],
+  ["Little Millet", 125, 113, 56],
+  ["Multi-Millet Mix", 150, 135, 68],
+  ["Pearl Millet (Bajra)", 90, 81, 41],
+  ["Proso Millet", 140, 126, 63],
+  ["Ragi Flour", 95, 86, 43],
+  ["Sorghum (Jowar)", 90, 81, 41],
+];
+
+const RICE_FALLBACK: PriceRow[] = [
+  ["Bamboo Rice", 250, 225, 113],
+  ["Karuppu Kavuni", 220, 198, 99],
+  ["Kattuyanam", 160, 144, 72],
+  ["Kichadi Samba", 140, 126, 63],
+  ["Kullakar", 150, 135, 68],
+  ["Mapillai Samba", 150, 135, 68],
+  ["Poongar", 150, 135, 68],
+  ["Rajamudi", 170, 153, 77],
+  ["Salem Sanna", 120, 108, 54],
+  ["Seeraga Samba", 180, 162, 81],
+  ["Sivappu Kavuni", 200, 180, 90],
+  ["Thooyamalli", 140, 126, 63],
+];
+
 function useCatalogue() {
   return useQuery({
     queryKey: ["public-catalogue"],
@@ -235,7 +264,14 @@ function useCatalogue() {
             Math.round((r.price_paise ?? 0) / 100),
             Math.round((r.price_paise ?? 0) / 200),
           ] as PriceRow);
-      return { millets: pick("millets"), rice: pick("rice") };
+          
+      const millets = pick("millets");
+      const rice = pick("rice");
+      
+      return { 
+        millets: millets.length > 0 ? millets : MILLETS_FALLBACK, 
+        rice: rice.length > 0 ? rice : RICE_FALLBACK 
+      };
     },
   });
 }
