@@ -22,6 +22,8 @@ import {
   Repeat,
   User,
   Plus,
+  Minus,
+  ShoppingCart,
 } from "lucide-react";
 import { useSession } from "@/lib/auth";
 import { useCart } from "@/lib/cart";
@@ -78,6 +80,9 @@ function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const { session } = useSession();
   const userName = session?.user?.user_metadata?.full_name?.split(" ")[0] || "Profile";
+  const cartContext = useCart();
+  const cartItemCount = cartContext?.items.reduce((acc, item) => acc + item.quantity, 0) || 0;
+  
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
@@ -138,6 +143,17 @@ function Nav() {
               Sign in
             </Link>
           )}
+          <Link
+            to="/checkout"
+            className="relative p-2 ml-4 text-brand-brown hover:text-brand-green transition"
+          >
+            <ShoppingCart className="h-6 w-6" />
+            {cartItemCount > 0 && (
+              <span className="absolute -top-1 -right-1 h-5 w-5 bg-brand-red text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                {cartItemCount}
+              </span>
+            )}
+          </Link>
         </div>
         <button className="lg:hidden p-2 -mr-2" onClick={() => setOpen((v) => !v)} aria-label="Toggle menu">
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -685,13 +701,37 @@ function WhatWeOffer() {
                 <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                   {week.map((w) => (
                     <div key={w.day} className="relative rounded-2xl border border-border bg-background shadow-sm overflow-hidden flex flex-col hover:shadow-md transition">
-                      <button 
-                        onClick={() => handleAction({ id: `combo-${w.day}`, name: `${w.item} + Plain Combo`, price_paise: 16800, quantity: 1, image: w.image }, false)}
-                        className="absolute top-4 right-4 h-8 w-8 rounded bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition z-10"
-                        title="Add to Cart"
-                      >
-                        <Plus className="h-5 w-5" />
-                      </button>
+                      {(() => {
+                        const cartItem = cartContext?.items.find((i) => i.id === `combo-${w.day}`);
+                        return cartItem ? (
+                          <div className="absolute top-4 right-4 flex items-center bg-white border border-blue-200 rounded-lg shadow-sm z-10 overflow-hidden">
+                            <button 
+                              onClick={() => {
+                                if (cartItem.quantity === 1) cartContext?.removeFromCart(cartItem.id);
+                                else cartContext?.updateQuantity(cartItem.id, -1);
+                              }}
+                              className="w-8 h-8 flex items-center justify-center text-blue-600 hover:bg-blue-50 transition"
+                            >
+                              <Minus className="h-4 w-4" />
+                            </button>
+                            <span className="w-6 text-center text-sm font-bold text-blue-600">{cartItem.quantity}</span>
+                            <button 
+                              onClick={() => cartContext?.updateQuantity(cartItem.id, 1)}
+                              className="w-8 h-8 flex items-center justify-center text-blue-600 hover:bg-blue-50 transition"
+                            >
+                              <Plus className="h-4 w-4" />
+                            </button>
+                          </div>
+                        ) : (
+                          <button 
+                            onClick={() => handleAction({ id: `combo-${w.day}`, name: `${w.item} + Plain Combo`, price_paise: 16800, quantity: 1, image: w.image }, false)}
+                            className="absolute top-4 right-4 h-8 w-8 rounded-lg bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition z-10"
+                            title="Add to Cart"
+                          >
+                            <Plus className="h-5 w-5" />
+                          </button>
+                        );
+                      })()}
                       <div className="flex gap-4 p-5 pb-4">
                         <img src={w.image} className="w-20 h-20 rounded-xl object-cover shrink-0 shadow-sm" alt={w.item} />
                         <div className="flex flex-col justify-center pr-10">
@@ -700,14 +740,6 @@ function WhatWeOffer() {
                           <p className="text-sm text-muted-foreground mt-1">₹168</p>
                         </div>
                       </div>
-                      <div className="mt-auto p-5 pt-0">
-                        <button 
-                          onClick={() => handleAction({ id: `combo-${w.day}`, name: `${w.item} + Plain Combo`, price_paise: 16800, quantity: 1, image: w.image }, true)}
-                          className="w-full py-2.5 text-sm font-bold rounded-xl bg-brand-red text-white hover:brightness-110 transition shadow-sm"
-                        >
-                          Buy
-                        </button>
-                      </div>
                     </div>
                   ))}
                 </div>
@@ -715,27 +747,43 @@ function WhatWeOffer() {
                 <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 max-h-[600px] overflow-y-auto p-2 pb-6 custom-scrollbar">
                   {riceVarieties.map((r, idx) => (
                     <div key={idx} className="relative rounded-2xl border border-border bg-background shadow-sm overflow-hidden flex flex-col hover:shadow-md transition">
-                      <button 
-                        onClick={() => handleAction({ id: `rice-${idx}`, name: r.name, price_paise: r.price * 100, quantity: 1, image: r.image }, false)}
-                        className="absolute top-4 right-4 h-8 w-8 rounded bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition z-10"
-                        title="Add to Cart"
-                      >
-                        <Plus className="h-5 w-5" />
-                      </button>
+                      {(() => {
+                        const cartItem = cartContext?.items.find((i) => i.id === `rice-${idx}`);
+                        return cartItem ? (
+                          <div className="absolute top-4 right-4 flex items-center bg-white border border-blue-200 rounded-lg shadow-sm z-10 overflow-hidden">
+                            <button 
+                              onClick={() => {
+                                if (cartItem.quantity === 1) cartContext?.removeFromCart(cartItem.id);
+                                else cartContext?.updateQuantity(cartItem.id, -1);
+                              }}
+                              className="w-8 h-8 flex items-center justify-center text-blue-600 hover:bg-blue-50 transition"
+                            >
+                              <Minus className="h-4 w-4" />
+                            </button>
+                            <span className="w-6 text-center text-sm font-bold text-blue-600">{cartItem.quantity}</span>
+                            <button 
+                              onClick={() => cartContext?.updateQuantity(cartItem.id, 1)}
+                              className="w-8 h-8 flex items-center justify-center text-blue-600 hover:bg-blue-50 transition"
+                            >
+                              <Plus className="h-4 w-4" />
+                            </button>
+                          </div>
+                        ) : (
+                          <button 
+                            onClick={() => handleAction({ id: `rice-${idx}`, name: r.name, price_paise: r.price * 100, quantity: 1, image: r.image }, false)}
+                            className="absolute top-4 right-4 h-8 w-8 rounded-lg bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition z-10"
+                            title="Add to Cart"
+                          >
+                            <Plus className="h-5 w-5" />
+                          </button>
+                        );
+                      })()}
                       <div className="flex gap-4 p-5 pb-4">
                         <img src={r.image} className="w-20 h-20 rounded-xl object-cover shrink-0 shadow-sm" alt={r.name} />
                         <div className="flex flex-col justify-center pr-10">
                           <p className="text-base font-bold text-brand-green-dark leading-tight">{r.name}</p>
                           <p className="text-sm text-muted-foreground mt-1">₹{r.price} / 500g</p>
                         </div>
-                      </div>
-                      <div className="mt-auto p-5 pt-0">
-                        <button 
-                          onClick={() => handleAction({ id: `rice-${idx}`, name: r.name, price_paise: r.price * 100, quantity: 1, image: r.image }, true)}
-                          className="w-full py-2.5 text-sm font-bold rounded-xl bg-brand-red text-white hover:brightness-110 transition shadow-sm"
-                        >
-                          Buy
-                        </button>
                       </div>
                     </div>
                   ))}
@@ -744,27 +792,43 @@ function WhatWeOffer() {
                 <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 max-h-[600px] overflow-y-auto p-2 pb-6 custom-scrollbar">
                   {milletsVarieties.map((m, idx) => (
                     <div key={idx} className="relative rounded-2xl border border-border bg-background shadow-sm overflow-hidden flex flex-col hover:shadow-md transition">
-                      <button 
-                        onClick={() => handleAction({ id: `millet-${idx}`, name: m.name, price_paise: m.price * 100, quantity: 1, image: m.image }, false)}
-                        className="absolute top-4 right-4 h-8 w-8 rounded bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition z-10"
-                        title="Add to Cart"
-                      >
-                        <Plus className="h-5 w-5" />
-                      </button>
+                      {(() => {
+                        const cartItem = cartContext?.items.find((i) => i.id === `millet-${idx}`);
+                        return cartItem ? (
+                          <div className="absolute top-4 right-4 flex items-center bg-white border border-blue-200 rounded-lg shadow-sm z-10 overflow-hidden">
+                            <button 
+                              onClick={() => {
+                                if (cartItem.quantity === 1) cartContext?.removeFromCart(cartItem.id);
+                                else cartContext?.updateQuantity(cartItem.id, -1);
+                              }}
+                              className="w-8 h-8 flex items-center justify-center text-blue-600 hover:bg-blue-50 transition"
+                            >
+                              <Minus className="h-4 w-4" />
+                            </button>
+                            <span className="w-6 text-center text-sm font-bold text-blue-600">{cartItem.quantity}</span>
+                            <button 
+                              onClick={() => cartContext?.updateQuantity(cartItem.id, 1)}
+                              className="w-8 h-8 flex items-center justify-center text-blue-600 hover:bg-blue-50 transition"
+                            >
+                              <Plus className="h-4 w-4" />
+                            </button>
+                          </div>
+                        ) : (
+                          <button 
+                            onClick={() => handleAction({ id: `millet-${idx}`, name: m.name, price_paise: m.price * 100, quantity: 1, image: m.image }, false)}
+                            className="absolute top-4 right-4 h-8 w-8 rounded-lg bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition z-10"
+                            title="Add to Cart"
+                          >
+                            <Plus className="h-5 w-5" />
+                          </button>
+                        );
+                      })()}
                       <div className="flex gap-4 p-5 pb-4">
                         <img src={m.image} className="w-20 h-20 rounded-xl object-cover shrink-0 shadow-sm" alt={m.name} />
                         <div className="flex flex-col justify-center pr-10">
                           <p className="text-base font-bold text-brand-green-dark leading-tight">{m.name}</p>
                           <p className="text-sm text-muted-foreground mt-1">₹{m.price} / 500g</p>
                         </div>
-                      </div>
-                      <div className="mt-auto p-5 pt-0">
-                        <button 
-                          onClick={() => handleAction({ id: `millet-${idx}`, name: m.name, price_paise: m.price * 100, quantity: 1, image: m.image }, true)}
-                          className="w-full py-2.5 text-sm font-bold rounded-xl bg-brand-red text-white hover:brightness-110 transition shadow-sm"
-                        >
-                          Buy
-                        </button>
                       </div>
                     </div>
                   ))}
