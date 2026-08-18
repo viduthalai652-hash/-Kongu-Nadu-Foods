@@ -787,9 +787,9 @@ function WhatWeOffer() {
                           </button>
                         );
                       })()}
-                      <div className="flex gap-4 p-4 sm:p-5 pb-4">
+                      <div className="flex items-start gap-4 p-4 sm:p-5 pb-4">
                         <img src={r.image} className="w-20 h-20 rounded-xl object-cover shrink-0 shadow-sm" alt={r.name} />
-                        <div className="flex flex-col w-full justify-center">
+                        <div className="flex flex-col w-full mt-0.5">
                           <div className="pr-[82px]">
                             <p className="text-[15px] font-bold text-brand-green-dark leading-tight line-clamp-2" title={r.name}>{r.name}</p>
                             <p className="text-[13px] text-muted-foreground mt-0.5">500g</p>
@@ -852,9 +852,9 @@ function WhatWeOffer() {
                           </button>
                         );
                       })()}
-                      <div className="flex gap-4 p-4 sm:p-5 pb-4">
+                      <div className="flex items-start gap-4 p-4 sm:p-5 pb-4">
                         <img src={m.image} className="w-20 h-20 rounded-xl object-cover shrink-0 shadow-sm" alt={m.name} />
-                        <div className="flex flex-col w-full justify-center">
+                        <div className="flex flex-col w-full mt-0.5">
                           <div className="pr-[82px]">
                             <p className="text-[15px] font-bold text-brand-green-dark leading-tight line-clamp-2" title={m.name}>{m.name}</p>
                             <p className="text-[13px] text-muted-foreground mt-0.5">500g</p>
