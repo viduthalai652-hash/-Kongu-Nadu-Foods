@@ -478,32 +478,32 @@ const week = [
 ];
 
 const riceVarieties = [
-  { name: "Bamboo Rice", price: 150, image: PHOTOS.riceBamboo },
-  { name: "Karuppu Kavuni", price: 160, image: PHOTOS.riceKavuni },
-  { name: "Kattuyanam", price: 140, image: PHOTOS.riceKattuyanam },
-  { name: "Kichadi Samba", price: 130, image: PHOTOS.riceKichadi },
-  { name: "Kullakar", price: 125, image: PHOTOS.riceKullakar },
-  { name: "Mapillai Samba", price: 155, image: PHOTOS.riceMappillai },
-  { name: "Poongar", price: 140, image: PHOTOS.ricePoongar },
-  { name: "Rajamudi", price: 160, image: PHOTOS.riceRajamudi },
-  { name: "Salem Sanna", price: 135, image: PHOTOS.riceSalemsanna },
-  { name: "Seeraga Samba", price: 180, image: PHOTOS.riceSeeragasamba },
-  { name: "Sivappu Kavuni", price: 165, image: PHOTOS.riceSivappukavuni },
-  { name: "Thooyamalli", price: 150, image: PHOTOS.riceThooyamalli },
+  { name: "Bamboo Rice", price: 125, image: PHOTOS.riceBamboo },
+  { name: "Karuppu Kavuni", price: 110, image: PHOTOS.riceKavuni },
+  { name: "Kattuyanam", price: 80, image: PHOTOS.riceKattuyanam },
+  { name: "Kichadi Samba", price: 70, image: PHOTOS.riceKichadi },
+  { name: "Kullakar", price: 75, image: PHOTOS.riceKullakar },
+  { name: "Mapillai Samba", price: 75, image: PHOTOS.riceMappillai },
+  { name: "Poongar", price: 75, image: PHOTOS.ricePoongar },
+  { name: "Rajamudi", price: 85, image: PHOTOS.riceRajamudi },
+  { name: "Salem Sanna", price: 60, image: PHOTOS.riceSalemsanna },
+  { name: "Seeraga Samba", price: 90, image: PHOTOS.riceSeeragasamba },
+  { name: "Sivappu Kavuni", price: 100, image: PHOTOS.riceSivappukavuni },
+  { name: "Thooyamalli", price: 70, image: PHOTOS.riceThooyamalli },
 ];
 
 const milletsVarieties = [
-  { name: "Barnyard Millet", price: 110, image: PHOTOS.milletBarnyard },
-  { name: "Browntop Millet", price: 130, image: PHOTOS.milletBrowntop },
-  { name: "Finger Millet (Ragi)", price: 90, image: PHOTOS.milletFinger },
-  { name: "Foxtail Millet", price: 100, image: PHOTOS.milletFoxtail },
-  { name: "Kodo Millet", price: 105, image: PHOTOS.milletKodo },
-  { name: "Little Millet", price: 115, image: PHOTOS.milletLittle },
-  { name: "Multi-Millet Mix", price: 140, image: PHOTOS.milletMix },
-  { name: "Pearl Millet (Bajra)", price: 85, image: PHOTOS.milletPearl },
-  { name: "Proso Millet", price: 95, image: PHOTOS.milletProso },
-  { name: "Ragi Flour", price: 80, image: PHOTOS.flourRagi },
-  { name: "Sorghum (Jowar)", price: 90, image: PHOTOS.cholamBatter },
+  { name: "Barnyard Millet", price: 65, image: PHOTOS.milletBarnyard },
+  { name: "Browntop Millet", price: 70, image: PHOTOS.milletBrowntop },
+  { name: "Finger Millet (Ragi)", price: 40, image: PHOTOS.milletFinger },
+  { name: "Foxtail Millet", price: 60, image: PHOTOS.milletFoxtail },
+  { name: "Kodo Millet", price: 65, image: PHOTOS.milletKodo },
+  { name: "Little Millet", price: 63, image: PHOTOS.milletLittle },
+  { name: "Multi-Millet Mix", price: 75, image: PHOTOS.milletMix },
+  { name: "Pearl Millet (Bajra)", price: 45, image: PHOTOS.milletPearl },
+  { name: "Proso Millet", price: 70, image: PHOTOS.milletProso },
+  { name: "Ragi Flour", price: 48, image: PHOTOS.flourRagi },
+  { name: "Sorghum (Jowar)", price: 45, image: PHOTOS.cholamBatter },
 ];
 
 function BatterSection() {
@@ -778,18 +778,22 @@ function WhatWeOffer() {
                           </button>
                         );
                       })()}
-                      <div className="flex gap-4 p-5 pb-4">
+                      <div className="flex gap-4 p-4 sm:p-5 h-full">
                         <img src={r.image} className="w-20 h-20 rounded-xl object-cover shrink-0 shadow-sm" alt={r.name} />
-                        <div className="flex flex-col justify-center pr-10 w-full">
-                          <p className="text-base font-bold text-brand-green-dark leading-tight">{r.name}</p>
-                          <p className="text-sm text-muted-foreground mt-0.5">500g</p>
-                          <div className="mt-2 flex items-center gap-2 w-full">
-                            <span className="text-[10px] font-extrabold text-brand-green whitespace-nowrap">10% OFF</span>
-                            <div className="h-px flex-1 border-b border-dashed border-gray-300"></div>
+                        <div className="flex flex-col w-full h-full justify-between">
+                          <div className="pr-[82px]">
+                            <p className="text-[15px] font-bold text-brand-green-dark leading-tight line-clamp-2" title={r.name}>{r.name}</p>
+                            <p className="text-[13px] text-muted-foreground mt-0.5">500g</p>
                           </div>
-                          <div className="flex items-center gap-1.5 mt-1">
-                            <p className="text-base font-extrabold text-gray-800">₹{Math.round(r.price * 0.9)}</p>
-                            <p className="text-xs font-medium text-gray-400 line-through">₹{r.price}</p>
+                          <div className="mt-auto pt-2">
+                            <div className="flex items-center gap-2 w-full">
+                              <span className="text-[10px] font-extrabold text-brand-green whitespace-nowrap">10% OFF</span>
+                              <div className="h-px flex-1 border-b border-dashed border-gray-300"></div>
+                            </div>
+                            <div className="flex items-center gap-1.5 mt-0.5">
+                              <p className="text-base font-extrabold text-gray-800">₹{Math.round(r.price * 0.9)}</p>
+                              <p className="text-xs font-medium text-gray-400 line-through">₹{r.price}</p>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -831,18 +835,22 @@ function WhatWeOffer() {
                           </button>
                         );
                       })()}
-                      <div className="flex gap-4 p-5 pb-4">
+                      <div className="flex gap-4 p-4 sm:p-5 h-full">
                         <img src={m.image} className="w-20 h-20 rounded-xl object-cover shrink-0 shadow-sm" alt={m.name} />
-                        <div className="flex flex-col justify-center pr-10 w-full">
-                          <p className="text-base font-bold text-brand-green-dark leading-tight">{m.name}</p>
-                          <p className="text-sm text-muted-foreground mt-0.5">500g</p>
-                          <div className="mt-2 flex items-center gap-2 w-full">
-                            <span className="text-[10px] font-extrabold text-brand-green whitespace-nowrap">10% OFF</span>
-                            <div className="h-px flex-1 border-b border-dashed border-gray-300"></div>
+                        <div className="flex flex-col w-full h-full justify-between">
+                          <div className="pr-[82px]">
+                            <p className="text-[15px] font-bold text-brand-green-dark leading-tight line-clamp-2" title={m.name}>{m.name}</p>
+                            <p className="text-[13px] text-muted-foreground mt-0.5">500g</p>
                           </div>
-                          <div className="flex items-center gap-1.5 mt-1">
-                            <p className="text-base font-extrabold text-gray-800">₹{Math.round(m.price * 0.9)}</p>
-                            <p className="text-xs font-medium text-gray-400 line-through">₹{m.price}</p>
+                          <div className="mt-auto pt-2">
+                            <div className="flex items-center gap-2 w-full">
+                              <span className="text-[10px] font-extrabold text-brand-green whitespace-nowrap">10% OFF</span>
+                              <div className="h-px flex-1 border-b border-dashed border-gray-300"></div>
+                            </div>
+                            <div className="flex items-center gap-1.5 mt-0.5">
+                              <p className="text-base font-extrabold text-gray-800">₹{Math.round(m.price * 0.9)}</p>
+                              <p className="text-xs font-medium text-gray-400 line-through">₹{m.price}</p>
+                            </div>
                           </div>
                         </div>
                       </div>
