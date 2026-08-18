@@ -741,10 +741,10 @@ function WhatWeOffer() {
                           <p className="text-sm text-muted-foreground mt-1">₹168</p>
                         </div>
                       </div>
-                      <div className="p-4 pt-0 mt-auto">
+                      <div className="p-4 pb-4 pt-0 mt-auto flex justify-end">
                         <button 
                           onClick={() => handleAction({ id: `combo-${w.day}`, name: `${w.item} + Plain Combo`, price_paise: 16800, quantity: 1, image: w.image }, true)}
-                          className="w-full py-2.5 text-sm font-bold rounded-xl bg-brand-red text-white hover:brightness-110 transition shadow-sm"
+                          className="px-6 py-1.5 text-xs font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
                         >
                           Buy
                         </button>
@@ -806,10 +806,10 @@ function WhatWeOffer() {
                           </div>
                         </div>
                       </div>
-                      <div className="p-4 pt-0 mt-auto">
+                      <div className="p-4 pb-4 pt-0 mt-auto flex justify-end">
                         <button 
                           onClick={() => handleAction({ id: `rice-${idx}`, name: r.name, price_paise: Math.round(r.price * 0.9) * 100, quantity: 1, image: r.image }, true)}
-                          className="w-full py-2.5 text-sm font-bold rounded-xl bg-brand-red text-white hover:brightness-110 transition shadow-sm"
+                          className="px-6 py-1.5 text-xs font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
                         >
                           Buy
                         </button>
@@ -871,10 +871,10 @@ function WhatWeOffer() {
                           </div>
                         </div>
                       </div>
-                      <div className="p-4 pt-0 mt-auto">
+                      <div className="p-4 pb-4 pt-0 mt-auto flex justify-end">
                         <button 
                           onClick={() => handleAction({ id: `millet-${idx}`, name: m.name, price_paise: Math.round(m.price * 0.9) * 100, quantity: 1, image: m.image }, true)}
-                          className="w-full py-2.5 text-sm font-bold rounded-xl bg-brand-red text-white hover:brightness-110 transition shadow-sm"
+                          className="px-6 py-1.5 text-xs font-bold rounded-lg bg-brand-red text-white hover:brightness-110 transition shadow-sm"
                         >
                           Buy
                         </button>
